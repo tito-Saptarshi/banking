@@ -3,9 +3,8 @@
 import { ID } from "node-appwrite";
 import { createAdminClient, createSessionClient } from "../appwrite";
 import { cookies } from "next/headers";
-import { parse } from "path";
+
 import { parseStringify } from "../utils";
-import { log } from "console";
 
 export const signIn = async () => {
   try {
@@ -47,7 +46,9 @@ export const signUp = async (userData: SignUpParams) => {
 export async function getLoggedInUser() {
   try {
     const { account } = await createSessionClient();
-    return await account.get();
+    const user = await account.get();
+
+    return parseStringify(user);
   } catch (error) {
     return null;
   }
